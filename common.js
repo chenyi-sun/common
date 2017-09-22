@@ -10,15 +10,22 @@ var init = function(){
         else if(item.indexOf('#')>=0){
             dom = document.getElementById(item.replace('#',''));
         }
-        dom.set = function(){
-            console.log('ssssdd');
-        }
+        set(dom);
         return dom;
     }
-    
+    function set(dom){
+        dom.addClass = function(){
+            console.log(dom[0].className);
+            return dom;
+        }
+        dom.ask = function(){
+            console.log('ddd');
+            return dom;
+        }
+    }
     return chenyi;
 }
 
 var chenyi = init();
 console.log(chenyi('#sss'));
-chenyi('#sss').set();
+chenyi('#sss').set().addClass('d');
