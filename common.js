@@ -1,6 +1,6 @@
 //移除remove方法，现在存在一个bug，很多情况的dom，去执行同一个行为function,
 //方法什么的都一模一样，可是,dom.doo = function(){this----},还是要写很多遍
-//行为一致，拥有相同方法的一组对象，应该使用构造去实现
+//行为一致，拥有相同方法的一组对象，应该使用构造去实现,该如何去实现
 
 var init = function(){
     var dom;
@@ -19,13 +19,9 @@ var init = function(){
     }
     function set(dom){
         dom.addClass = function(items){
-            console.log(dom);
-            console.log(items);
             return dom;
         }
-
         dom.ask = function(){
-            console.log('ddd');
             return dom;
         }
         if(dom.length>=0){
