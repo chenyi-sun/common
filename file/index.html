@@ -1,0 +1,858 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="email=no" name="format-detection"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <title></title>
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/example.css"/>
+    <style type="text/css">
+        body {
+            -webkit-text-size-adjust: none; /* 字型大小是不會變的，而使用者就無法透過縮放網頁來達成放大字型 */
+            -webkit-appearance: none; /*可以改变按钮或者其它控件看起来类似本地的控件*/
+            -webkit-user-drag: none; /*-webkit-user-drag CSS 属性控制能否将元素作为一个整体拖动。*/
+            font-family: "Microsoft YaHei", 微软雅黑, SimHei, Helvetica Neue，Helvetica, Arial, sans-serif;
+        }
+
+        a {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /*很多Android 浏览器的 a 链接有边框，这里取消它 transparent */
+        }
+
+        /* For WebApp */
+        body {
+            -webkit-user-select: none; /* 如果用户长按web网页的文本内容，都会出现选中的行为，提供复制文字等功能。禁止用户选中文字 for iOS */
+        }
+
+        a, img {
+            -webkit-touch-callout: none; /* 在IOS浏览器里面，假如用户长按a标签，都会出现默认的弹出菜单事件。禁止用户在新窗口打开页面、如何禁止用户保存图片＼复制图片 for iOS */
+        }
+
+        * {
+            /* 禁止用户选中文字 for iOS */
+            -webkit-user-select: none;
+            /*很多Android 浏览器的 a 链接有边框，这里取消它*/
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        .applogo {
+            -moz-border-radius: 80px;
+            -webkit-border-radius: 80px;
+            border-radius: 80px;
+            width: 100px;
+            height: 100px;
+            box-shadow: #C9C9C9 0 2px 10px;
+            -moz-box-shadow: #C9C9C9 0 2px 10px;
+            -webkit-box-shadow: #C9C9C9 0 2px 10px;
+        }
+
+        /*************** 组件切换动画效果.BEGIN ***************/
+        /* 可以设置渐隐渐显动画 */
+        .component-fade-enter-active, .component-fade-leave-active {
+            transition: opacity .3s ease;
+        }
+
+        .component-fade-enter, .component-fade-leave-active {
+            opacity: 0;
+        }
+
+        /* 可以设置不同的进入和离开动画 */
+        /* 设置持续时间和动画函数 */
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+
+        .slide-fade-leave-active {
+            transition: all .3s ease;
+        }
+
+        .slide-fade-enter, .slide-fade-leave-to {
+            transform: translateX(20px);
+            opacity: 0;
+            /* .slide-fade-leave-active for <2.1.8 */
+        }
+
+        /*************** 组件切换动画效果.END ***************/
+
+    </style>
+</head>
+<body ontouchstart>
+<div id="jview" class="container js_container">
+    <transition name="slide-fade" mode="out-in">
+        <keep-alive>
+            <component v-bind:is="pageView" ref="child"></component>
+        </keep-alive>
+    </transition>
+    <Dialog></Dialog>
+</div>
+
+<template id="template-home">
+    <div id="homeView" class="page" style="width: 100%;height: 100%;">
+        <div class="hd">
+            <h1 class="page_title">功能测试(新版本9.5)</h1>
+            <h3 id="barcode" class="page_title" style="font-size: 16px;"></h3>
+        </div>
+        <div class="bd spacing">
+            <input id="fileid" type="file" accept="image/png,image/jpg,image/jpeg" name="file" style="display: none"
+                   multiple/>
+            <a href="javascript:alert(window.location.href);" class="weui_btn weui_btn_primary">当前页面URL</a>
+            <a href="javascript:alert('测试');" class="weui_btn weui_btn_primary">alert对话框</a>
+            <a href="javascript:;" v-on:click="inputFile()" class="weui_btn weui_btn_primary">测试input file标签</a>
+            <a href="javascript:window.close();" class="weui_btn weui_btn_primary">JS关闭当前窗口</a>
+            <a href="javascript:;" v-on:click="openNativeView()" class="weui_btn weui_btn_primary">打开新窗口</a>
+            <div id="apiinfo" style="width: 100%;height: 7rem;overflow-y:scroll;margin: 0.7rem;color: #6f6f6f">
+                微信/微博交互信息显示区域
+            </div>
+            <a href="javascript:;" v-on:click="weChatLogin()" class="weui_btn weui_btn_primary">发起微信登陆</a>
+            <a href="javascript:;" v-on:click="weiBoLogin()" class="weui_btn weui_btn_primary">发起微博登陆</a>
+            <div class="weui_cells weui_cells_checkbox">
+                <label class="weui_cell weui_check_label" for="s21">
+                    <div class="weui_cell_hd">
+                        <input type="radio" class="weui_check" name="transaction" value="text" id="s21"
+                               checked="checked">
+                        <i class="weui_icon_checked"></i>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>文本类型</p>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="s22">
+                    <div class="weui_cell_hd">
+                        <input type="radio" class="weui_check" name="transaction" value="img" id="s22">
+                        <i class="weui_icon_checked"></i>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>图片类型</p>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="s23">
+                    <div class="weui_cell_hd">
+                        <input type="radio" class="weui_check" name="transaction" value="music" id="s23">
+                        <i class="weui_icon_checked"></i>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>音乐类型</p>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="s24">
+                    <div class="weui_cell_hd">
+                        <input type="radio" class="weui_check" name="transaction" value="video" id="s24">
+                        <i class="weui_icon_checked"></i>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>视频类型</p>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="s25">
+                    <div class="weui_cell_hd">
+                        <input type="radio" class="weui_check" name="transaction" value="webpage" id="s25">
+                        <i class="weui_icon_checked"></i>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>网页类型</p>
+                    </div>
+                </label>
+            </div>
+            <!--BEGIN actionSheet-->
+            <div id="actionSheet_wrap">
+                <div class="weui_mask_transition" id="mask"></div>
+                <div class="weui_actionsheet" id="weui_actionsheet">
+                    <div class="weui_actionsheet_menu">
+                        <div class="weui_actionsheet_cell" v-on:click="wxShareCollection(0)">分享给好友</div>
+                        <div class="weui_actionsheet_cell" v-on:click="wxShareCollection(1)">分享到朋友圈</div>
+                        <div class="weui_actionsheet_cell" v-on:click="wxShareCollection(2)">分享到微信收藏</div>
+                    </div>
+                    <div class="weui_actionsheet_action">
+                        <div class="weui_actionsheet_cell" id="actionsheet_cancel">取消</div>
+                    </div>
+                </div>
+            </div>
+            <!--END actionSheet-->
+            <a href="javascript:actionsheetshow();" class="weui_btn weui_btn_primary">微信分享与收藏</a>
+            <a href="javascript:;" v-on:click="weiBoShare()" class="weui_btn weui_btn_primary">微博分享</a>
+            <a href="javascript:;" v-on:click="showNativeTitleBar()" class="weui_btn weui_btn_primary">显示原生标题栏</a>
+            <a href="javascript:;" v-on:click="hideNativeTitleBar()" class="weui_btn weui_btn_primary">隐藏原生标题栏</a>
+            <a href="javascript:;" v-on:click="setNativeTitle()" class="weui_btn weui_btn_primary">设置标题栏标题</a>
+            <a href="javascript:;" v-on:click="setNativeTitleBackgroundColor()" class="weui_btn weui_btn_primary">设置标题栏背景色</a>
+            <a href="javascript:;" v-on:click="setNativeTitleColor()" class="weui_btn weui_btn_primary">设置标题栏文字颜色</a>
+            <a href="javascript:;" v-on:click="request()" class="weui_btn weui_btn_primary">发起网络请求</a>
+            <a href="javascript:;" v-on:click="uploadFile()" class="weui_btn weui_btn_primary">将本地资源上传到服务器</a>
+            <a href="javascript:;" v-on:click="downloadFile()" class="weui_btn weui_btn_primary">下载文件资源到本地</a>
+            <a href="javascript:;" v-on:click="chooseImage()" class="weui_btn weui_btn_primary">从本地相册选择图片或使用相机拍照</a>
+            <a href="javascript:;" v-on:click="chooseImageAlbum()" class="weui_btn weui_btn_primary">从本地相册选择图片</a>
+            <a href="javascript:;" v-on:click="chooseImageCamera()" class="weui_btn weui_btn_primary">使用相机拍照选择图片</a>
+            <a href="javascript:;" v-on:click="previewImage()" class="weui_btn weui_btn_primary">预览图片</a>
+            <a href="javascript:;" v-on:click="saveImageToPhotosAlbum()" class="weui_btn weui_btn_primary">保存图片到系统相册</a>
+            <img id="base64image" style="width: 93%;height: 5rem;margin: 0.7rem;" src=""/>
+            <a href="javascript:;" v-on:click="imageToBase64()" class="weui_btn weui_btn_primary">本地图片转Base64</a>
+            <a href="javascript:;" v-on:click="startRecord()" class="weui_btn weui_btn_primary">开始录音</a>
+            <a href="javascript:;" v-on:click="stopRecord()" class="weui_btn weui_btn_primary">停止录音</a>
+            <a href="javascript:;" v-on:click="cancelRecord()" class="weui_btn weui_btn_primary">取消录音</a>
+            <a href="javascript:;" v-on:click="getLocation()" class="weui_btn weui_btn_primary">获取当前的地理位置、速度</a>
+            <a href="javascript:;" v-on:click="getSystemInfo()" class="weui_btn weui_btn_primary">获取系统信息</a>
+            <a href="javascript:;" v-on:click="getNetworkType()" class="weui_btn weui_btn_primary">获取网络类型</a>
+            <a href="javascript:;" v-on:click="onNetworkStatusChange()" class="weui_btn weui_btn_primary">监听网络状态变化</a>
+            <a href="javascript:;" v-on:click="makePhoneCall()" class="weui_btn weui_btn_primary">拨打电话</a>
+            <div id="scanqrinfo" style="width: 100%;height: 5rem;overflow-y:scroll;margin: 0.7rem;color: #6f6f6f">
+
+            </div>
+            <a href="javascript:;" v-on:click="scanCode()" class="weui_btn weui_btn_primary">扫码</a>
+            <a href="javascript:;" v-on:click="setClipboardData()" class="weui_btn weui_btn_primary">设置系统剪贴板的内容</a>
+            <a href="javascript:;" v-on:click="getClipboardData()" class="weui_btn weui_btn_primary">获取系统剪贴板内容</a>
+            <a href="javascript:;" v-on:click="setScreenBrightness()" class="weui_btn weui_btn_primary">设置屏幕亮度</a>
+            <a href="javascript:;" v-on:click="getScreenBrightness()" class="weui_btn weui_btn_primary">获取屏幕亮度</a>
+            <a href="javascript:;" v-on:click="setKeepScreenOn()" class="weui_btn weui_btn_primary">设置是否保持常亮状态</a>
+            <a href="javascript:;" v-on:click="onUserCaptureScreen()" class="weui_btn weui_btn_primary">用户截屏事件监听</a>
+            <a href="javascript:;" v-on:click="vibrateLong()" class="weui_btn weui_btn_primary">使手机发生较长时间的振动</a>
+            <a href="javascript:;" v-on:click="vibrateShort()" class="weui_btn weui_btn_primary">使手机发生较短时间的振动</a>
+            <a href="javascript:;" v-on:click="addPhoneContact()" class="weui_btn weui_btn_primary">新增手机联系人</a>
+            <a href="javascript:;" v-on:click="showNotify()" class="weui_btn weui_btn_primary">显示通知</a>
+            <a href="javascript:;" v-on:click="sendSMS()" class="weui_btn weui_btn_primary">发短信</a>
+            <a href="javascript:;" v-on:click="openPopWindow()" class="weui_btn weui_btn_primary">打开POP窗口</a>
+            <a href="javascript:;" v-on:click="colsePopWindow()" class="weui_btn weui_btn_primary">关闭POP窗口</a>
+            <a href="javascript:;" v-on:click="disableScreenshots()" class="weui_btn weui_btn_primary">禁止截屏</a>
+            <a href="javascript:;" v-on:click="allowScreenshots()" class="weui_btn weui_btn_primary">允许截屏</a>
+            <a href="javascript:;" v-on:click="addCalendarEvent()" class="weui_btn weui_btn_primary">添加系统日历事件、日程</a>
+            <a href="javascript:;" v-on:click="updateApplication()" class="weui_btn weui_btn_primary">APP应用更新</a>
+            <a href="javascript:;" v-on:click="updateAssets()" class="weui_btn weui_btn_primary">Assets资源文件更新</a>
+            <div id="socketinfo" style="width: 100%;height: 7rem;overflow-y:scroll;margin: 0.7rem;color: #6f6f6f">
+                Socket交互信息显示区域
+            </div>
+            <a href="javascript:;" v-on:click="connectSocket()" class="weui_btn weui_btn_primary">创建WebSocket连接并监听</a>
+            <a href="javascript:;" v-on:click="sendSocketMessage()"
+               class="weui_btn weui_btn_primary">通过WebSocket连接发送数据</a>
+            <a href="javascript:;" v-on:click="closeSocket()" class="weui_btn weui_btn_primary">关闭WebSocket连接</a>
+            <a href="javascript:;" v-on:click="setStorage()" class="weui_btn weui_btn_primary">将数据存储在本地缓存中指定的 key 中</a>
+            <a href="javascript:;" v-on:click="getStorage()" class="weui_btn weui_btn_primary">从本地缓存中获取指定 key 对应的内容</a>
+            <a href="javascript:;" v-on:click="getStorageInfo()" class="weui_btn weui_btn_primary">获取当前storage的相关信息</a>
+            <a href="javascript:;" v-on:click="removeStorage()" class="weui_btn weui_btn_primary">从本地缓存中移除指定 key</a>
+            <a href="javascript:;" v-on:click="clearStorage()" class="weui_btn weui_btn_primary">清理本地数据缓存</a>
+        </div>
+    </div>
+</template>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="WebViewJavascriptBridge.js"></script>
+<script type="text/javascript">
+    function actionsheetshow() {
+        var mask = $('#mask');
+        var weuiActionsheet = $('#weui_actionsheet');
+        weuiActionsheet.addClass('weui_actionsheet_toggle');
+        mask.show()
+                .focus()
+                .addClass('weui_fade_toggle').one('click', function () {
+            hideActionSheet(weuiActionsheet, mask);
+        });
+        $('#actionsheet_cancel').one('click', function () {
+            hideActionSheet(weuiActionsheet, mask);
+        });
+        mask.unbind('transitionend').unbind('webkitTransitionEnd');
+
+        function hideActionSheet(weuiActionsheet, mask) {
+            weuiActionsheet.removeClass('weui_actionsheet_toggle');
+            mask.removeClass('weui_fade_toggle');
+            mask.on('transitionend', function () {
+                mask.hide();
+            }).on('webkitTransitionEnd', function () {
+                mask.hide();
+            })
+        }
+    }
+</script>
+<script type="text/javascript">
+    var _tempFilePath = '';
+    var vue = new Vue({
+        el: '#jview',
+        data: { pageView: 'Home' },
+        beforeMount: function () {
+
+        },
+        methods: {
+            refData: function (id) {
+                vue.$refs.child.id = id;
+            }
+        },
+        mounted: function () {
+
+        },
+        components: {
+            'Home': {
+                template: '#template-home',
+                data: function () {
+                    return {
+                        screens: []
+                    }
+                },
+                methods: {
+                    inputFile: function () {
+                        var ifile = $('#fileid');
+                        ifile.change(function (e) {
+                            var files = e.target.files; //document.getElementById('fileid').files;
+                            alert(files.length);
+                            if (files.length > 0) {
+                                for (var i = 0; i < files.length; i++) {
+                                    console.log(files[i]);
+                                }
+                            }
+                        });
+                        ifile.click();
+                    },
+                    weChatLogin: function () {
+                        var parJSON = {
+                            appid: 'wxdf7e4acdf1e1e054',
+                            secret: 'a97bf378d6e199c54fa77fdc4b024f32',
+                            scope: 'snsapi_userinfo',
+                            state: 'jeaes_app_jview'
+                        };
+                        window.je.OpenAPI.weChatLogin(parJSON, function (res) {
+                            $('#apiinfo').html(res);
+                        });
+                    },
+                    weiBoLogin: function () {
+                        var parJSON = {
+                            appkey: '3754379981',
+                            secret: 'bb508557306e3228c88be4d88175257e'
+                        };
+                        window.je.OpenAPI.weiBoLogin(parJSON, function (res) {
+                            $('#apiinfo').html(res);
+                        });
+                    },
+                    wxShareCollection: function (wxscene) {
+                        var parJSON = {
+                            count: 3,
+                            sizeType: ['original', 'compressed'],
+                            sourceType: ['album', 'camera']
+                        }
+                        var transaction = $('input[name="transaction"]:radio:checked').val();
+                        if (transaction == 'text') {
+                            var parJSON = {
+                                scene: wxscene,
+                                transaction: transaction,
+                                text: '分享文本测试',
+                                imgArr: [],
+                                url: 'http://www.jeaes.com',
+                                title: '测试标题',
+                                description: '测试描述'
+                            };
+                            window.je.OpenAPI.wxShareCollection(parJSON, function (res) {
+                                $('#apiinfo').html(res);
+                            });
+                        } else {
+                            window.je.Media.chooseImage(parJSON, function (res) {
+                                var resJson = JSON.parse(res);
+                                var tempFilePaths = resJson.tempFilePaths;
+                                var parJSON = {
+                                    scene: wxscene,
+                                    transaction: transaction,
+                                    text: '分享媒体类型',
+                                    imgArr: tempFilePaths,
+                                    url: 'http://www.jeaes.com',
+                                    title: '媒体类型标题',
+                                    description: '媒体类型描述'
+                                };
+                                window.je.OpenAPI.wxShareCollection(parJSON, function (res) {
+                                    $('#apiinfo').html(res);
+                                });
+                            });
+                        }
+                    },
+                    weiBoShare: function () {
+                        var parJSON = {
+                            text: '分享微博',
+                            image: 'https://www.baidu.com/img/bd_logo1.png'
+                        };
+                        window.je.OpenAPI.weiBoShare(parJSON, function (res) {
+                            $('#apiinfo').html(res);
+                        });
+                    },
+                    showNativeTitleBar: function () {
+                        window.je.UI.showNativeTitleBar(function (res) {
+                            alert(res);
+                        });
+                    },
+                    hideNativeTitleBar: function () {
+                        window.je.UI.hideNativeTitleBar(function (res) {
+                            alert(res);
+                        });
+                    },
+                    setNativeTitle: function () {
+                        var parJSON = {
+                            title: '原生标题3'
+                        };
+                        window.je.UI.setNativeTitle(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    setNativeTitleBackgroundColor: function () {
+                        var parJSON = {
+                            color: '#04BE02'
+                        };
+                        window.je.UI.setNativeTitleBackgroundColor(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    setNativeTitleColor: function () {
+                        var parJSON = {
+                            color: '#FF5722'
+                        };
+                        window.je.UI.setNativeTitleColor(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    request: function () {
+                        var parJSON = {
+                            url: 'http://www.jeaes.com/app/ad.json',
+                            data: { par1: '测试数据1', par2: '测试数据2' },
+                            // header: { header: { "Accept": "text/html" } },
+                            method: 'GET',
+                            dataType: 'json'
+                        };
+                        window.je.Network.request(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    uploadFile: function () {
+                        //window.je.Media.chooseImage(function (res) {
+                        //var tempFilePaths = res.tempFilePaths;
+                        if (_tempFilePath == '') {
+                            alert('请先下载文件');
+                        } else {
+                            var parJSON = {
+                                url: 'http://www.jeaes.com:8081/space/api/files/upload',
+                                filePath: _tempFilePath,//tempFilePaths[0],
+                                name: 'file',
+                                formData: {
+                                    'user': 'test'
+                                },
+                            };
+                            window.je.Network.uploadFile(parJSON, function (res) {
+                                alert(res);
+                            });
+                        }
+
+                        //});
+                    },
+                    downloadFile: function () {
+                        var parJSON = {
+                            url: 'http://www.jeaes.com/app/ad.json',
+                            //header: '',
+                            sync: true
+                        }
+                        window.je.Network.downloadFile(parJSON, function (res) {
+                            var resJson = JSON.parse(res);
+                            _tempFilePath = resJson.tempFilePath;
+                            alert(res);
+                        });
+                    },
+                    chooseImage: function () {
+                        var parJSON = {
+                            count: 6,
+                            sizeType: ['original', 'compressed'],
+                            sourceType: ['album', 'camera']
+                        }
+                        window.je.Media.chooseImage(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    chooseImageAlbum: function () {
+                        var parJSON = {
+                            count: 6,
+                            sizeType: ['original', 'compressed'],
+                            sourceType: ['album']
+                        }
+                        window.je.Media.chooseImage(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    chooseImageCamera: function () {
+                        var parJSON = {
+                            count: 6,
+                            sizeType: ['original', 'compressed'],
+                            sourceType: ['camera']
+                        }
+                        window.je.Media.chooseImage(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    previewImage: function () {
+                        var parJSON = {
+                            current: 'http://www.jeaes.com/popbg.jpg',
+                            urls: ['http://www.jeaes.com/popbg.jpg', 'https://www.baidu.com/img/bd_logo1.png']
+                        }
+                        window.je.Media.previewImage(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    saveImageToPhotosAlbum: function () {
+                        var parJSON = {
+                            url: 'http://www.jeaes.com/popbg.jpg',
+                            sync: true
+                        }
+                        window.je.Network.downloadFile(parJSON, function (res) {
+                            var resJson = JSON.parse(res);
+                            window.je.Media.saveImageToPhotosAlbum({ filePath: resJson.tempFilePath }, function (res) {
+                                alert(res);
+                            });
+                        });
+                    },
+                    imageToBase64: function () {
+                        var parJSON = {
+                            count: 1,
+                            sizeType: ['original', 'compressed'],
+                            sourceType: ['album', 'camera']
+                        }
+                        window.je.Media.chooseImage(parJSON, function (res) {
+                            var resJson = JSON.parse(res);
+                            var tempFilePaths = resJson.tempFilePaths;
+                            window.je.Media.imageToBase64({ filePath: tempFilePaths[0] }, function (res) {
+                                var imgJson = JSON.parse(res);
+                                $('#base64image').attr('src', 'data:' + imgJson.type + ';base64,' + imgJson.base64);
+                            });
+                        });
+                    },
+                    startRecord: function () {
+                        var parJSON = {
+                            limit: 120,
+                            toast: true
+                        }
+                        window.je.Media.startRecord(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    stopRecord: function () {
+                        window.je.Media.stopRecord(function (res) {
+                            alert(res);
+                        });
+                    },
+                    cancelRecord: function () {
+                        window.je.Media.cancelRecord(function (res) {
+                            alert(res);
+                        });
+                    },
+                    getLocation: function () {
+                        var parJSON = {
+                            type: 'gcj02'
+                        }
+                        window.je.Location.getLocation(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    getSystemInfo: function () {
+                        window.je.Device.getSystemInfo(function (res) {
+                            alert(res);
+                        });
+                    },
+                    getNetworkType: function () {
+                        window.je.Network.getNetworkType(function (res) {
+                            alert(res);
+                        });
+                    },
+                    onNetworkStatusChange: function () {
+                        window.je.Network.onNetworkStatusChange(function (res, callback) {
+                            alert(res);
+                            callback('js回调');
+                        });
+                    },
+                    makePhoneCall: function () {
+                        var parJSON = {
+                            phoneNumber: '18501718971'
+                        }
+                        window.je.Device.makePhoneCall(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    scanCode: function () {
+                        window.je.Device.scanCode(function (res) {
+                            $('#scanqrinfo').html(res);
+                        });
+                    },
+                    setClipboardData: function () {
+                        var parJSON = {
+                            data: '剪切板数据'
+                        }
+                        window.je.Device.setClipboardData(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    getClipboardData: function () {
+                        window.je.Device.getClipboardData(function (res) {
+                            alert(res);
+                        });
+                    },
+                    setScreenBrightness: function () {
+                        var parJSON = {
+                            value: 1
+                        }
+                        window.je.Device.setScreenBrightness(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    getScreenBrightness: function () {
+                        window.je.Device.getScreenBrightness(function (res) {
+                            alert(res);
+                        });
+                    },
+                    setKeepScreenOn: function () {
+                        var parJSON = {
+                            keepScreenOn: true
+                        }
+                        window.je.Device.setKeepScreenOn(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    onUserCaptureScreen: function () {
+                        window.je.Device.onUserCaptureScreen(function (res, callback) {
+                            alert('你截屏了');
+                            callback('js回调');
+                        });
+                    },
+                    vibrateLong: function () {
+                        window.je.Device.vibrateLong(function (res) {
+                            alert(res);
+                        });
+                    },
+                    vibrateShort: function () {
+                        window.je.Device.vibrateShort(function (res) {
+                            alert(res);
+                        });
+                    },
+                    addPhoneContact: function () {
+                        var parJSON = {
+                            photoFilePath: '',
+                            nickName: 'Aly',
+                            lastName: '张',
+                            middleName: '',
+                            firstName: '三',
+                            remark: '测试',
+                            mobilePhoneNumber: '18501718971',
+                            weChatNumber: '',
+                            addressCountry: '',
+                            addressState: '',
+                            addressCity: '',
+                            addressStreet: '',
+                            addressPostalCode: '',
+                            organization: 'Jeaes',
+                            title: '',
+                            workFaxNumber: '',
+                            workPhoneNumber: '',
+                            hostNumber: '',
+                            email: '',
+                            url: 'www.jeaes.com',
+                            workAddressCountry: '',
+                            workAddressState: '',
+                            workAddressCity: '',
+                            workAddressStreet: '',
+                            workAddressPostalCode: ''
+                        }
+                        window.je.Device.addPhoneContact(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    showNotify: function () {
+                        var parJSON = {
+                            title: '测试通知',
+                            content: '这是一条常驻通知',
+                            permanent: true
+                        }
+                        window.je.UI.showNotify(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    sendSMS: function () {
+                        var parJSON = {
+                            phone: '18501718971',
+                            content: '这是一条测试短信'
+                        }
+                        window.je.Device.sendSMS(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    openPopWindow: function () {
+                        var parJSON = {
+                            imgUrl: 'http://www.jeaes.com/popbg.jpg',
+                            clickUrl: 'http://www.baidu.com'
+                        }
+                        window.je.UI.openPopWindow(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    colsePopWindow: function () {
+                        window.je.UI.colsePopWindow(function (res) {
+                            alert(res);
+                        });
+                    },
+                    disableScreenshots: function () {
+                        window.je.UI.disableScreenshots(function (res) {
+                            alert(res);
+                        });
+                    },
+                    allowScreenshots: function () {
+                        window.je.UI.allowScreenshots(function (res) {
+                            alert(res);
+                        });
+                    },
+                    openNativeView: function () {
+                        var parJSON = {
+                            url: 'http://www.baidu.com',
+                            share: true,
+                            back: true,
+                            progress: true,
+                            progressColor: '#2196F3',
+                            longPress: false,
+                            titleBar: true,
+                            statusBar: '',
+                            titleBackgroundColor: '#FFFFFF',
+                            titleColor: '#333333'
+                        }
+                        window.je.UI.openNativeView(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    addCalendarEvent: function () {
+                        var begintime = window.je.Utils.getTimestamp(new Date());
+                        var parJSON = {
+                            title: '这一个日程事件',
+                            description: '描述说明',
+                            location: '上海市长宁区福泉路99号',
+                            beginTime: begintime,
+                            endTime: begintime + 300,
+                            allDay: true
+                        }
+                        window.je.Device.addCalendarEvent(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    updateApplication: function () {
+                        var _url = '';
+                        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                            _url = 'itms-apps://itunes.apple.com/cn/app/id452186370?mt=8';
+                        } else if (/(Android)/i.test(navigator.userAgent)) {
+                            _url = 'http://gdown.baidu.com/data/wisegame/f6759c23088cb7e0/baiduditu_825.apk';
+                        }
+                        var parJSON = {
+                            url: _url
+                        }
+                        window.je.Application.updateApplication(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    updateAssets: function () {
+                        var timestamp = window.je.Utils.getTimestamp(new Date());
+                        var parJSON = {
+                            url: 'http://www.jeaes.com/app/assets.zip?'+timestamp,
+                        }
+                        window.je.Application.updateAssets(parJSON, function (res) {
+                            //alert(res);
+                            window.location.reload();
+                        });
+                    },
+                    connectSocket: function () {
+                        var parJSON = {
+                            url: 'ws://www.jeaes.com:8081/space/socket',
+                            data: {
+                                x: 'x111',
+                                y: 'y222'
+                            },
+                            header: {
+                                'content-type': 'application/json'
+                            },
+                            method: "GET"
+                        }
+                        var ws = window.je.WebSocket;
+                        ws.connectSocket(parJSON, function (res) {
+                            $('#socketinfo').prepend('连接已建立：' + res + '<br>');
+                            ws.onSocketOpen(function (res, callback) {
+                                $('#socketinfo').prepend('WebSocket连接已打开：' + res + '<br>');
+                                //callback('js回调');
+                            });
+                            ws.onSocketError(function (res, callback) {
+                                $('#socketinfo').prepend('WebSocket连接打开失败：' + res + '，请检查！<br>');
+                                //callback('js回调');
+                            });
+                            ws.onSocketMessage(function (res, callback) {
+                                //var resJson = JSON.parse(res);
+                                $('#socketinfo').prepend('收到服务器内容：' + res + '<br>');
+                                //callback('js回调');
+                            });
+                            ws.onSocketClose(function (res, callback) {
+                                $('#socketinfo').prepend('WebSocket 已关闭：' + res + '<br>');
+                                //callback('js回调');
+                            });
+                        });
+                    },
+                    sendSocketMessage: function () {
+                        var parJSON = {
+                            data: {
+                                dv: '发送的数据111',
+                                ds: '发送的数据333'
+                            }
+                        }
+                        window.je.WebSocket.sendSocketMessage(parJSON, function (res) {
+                            //alert(res);
+                        });
+                    },
+                    closeSocket: function () {
+                        window.je.WebSocket.closeSocket(function (res) {
+                            //alert(res);
+                        });
+                    },
+                    setStorage: function () {
+                        var parJSON = {
+                            key: 'teststorage',
+                            data: '测试缓存对象',
+                            sync: true
+                        }
+                        window.je.Data.setStorage(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    getStorage: function () {
+                        var parJSON = {
+                            key: 'teststorage',
+                            sync: true
+                        }
+                        window.je.Data.getStorage(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    getStorageInfo: function () {
+                        var parJSON = {
+                            sync: true
+                        }
+                        window.je.Data.getStorageInfo(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    removeStorage: function () {
+                        var parJSON = {
+                            key: 'teststorage',
+                            sync: true
+                        }
+                        window.je.Data.removeStorage(parJSON, function (res) {
+                            alert(res);
+                        });
+                    },
+                    clearStorage: function () {
+                        var parJSON = {
+                            sync: true
+                        }
+                        window.je.Data.clearStorage(parJSON, function (res) {
+                            alert(res);
+                        });
+                    }
+                },
+                beforeMount: function () {
+
+                },
+                mounted: function () {
+
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

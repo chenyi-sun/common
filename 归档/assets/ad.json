@@ -1,0 +1,9 @@
+﻿{
+    "errcode": "200",
+    "errmsg": "",
+    "data": {
+        "clickUrl": "http://www.baidu.com",
+        "imgUrl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505895926887&di=6501131cea69bef7226a60f601de537a&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F18%2F88%2F97%2F76D58PICvrg_1024.jpg",
+        "over": true
+    }
+}

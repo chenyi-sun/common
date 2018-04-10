@@ -1,0 +1,5 @@
+icons目录为APP图标文件夹，图片名称固定不变
+loading目录为启动图片文件夹，图片名称固定不变
+config.json文件为APP应用参数配置文件
+ad.json文件为adUrl请求后返回的广告页面参数结构
+WebViewJavascriptBridge.js文件为接口交互文件
