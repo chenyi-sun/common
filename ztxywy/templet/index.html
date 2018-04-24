@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/public/common.css"/>
+  <link rel="stylesheet" href="css/public/index.css"/>
+</head>
+<body>
+<div class="box">
+  <!--测试组件-->
+  <div class="console" id="console">
+    <div class="test">测试</div>
+    <div class="content">
+    </div>
+  </div>
+  <div class="alert-box">
+    <div class="alert-box-inlinebox">暂无数据</div>
+  </div>
+  <!-- home-box组件 限定可显示大小，防止边缘阻挡 -->
+  <div class="box-home">
+    <div class="head">
+      <div class="logo">智慧社区</div>
+      <div class="head_title"></div>
+      <div class="y-m-d" id="y-m-d"></div>
+      <div class="slash">/</div>
+      <div class="date" id="data"></div>
+      <div class="time" id="time"></div>
+    </div>
+    <div class="main">
+      <div class="nav">
+        <div class="all-menus">
+          <!--<a class="menu" href="javascript:;">
+              我的首页
+          </a>-->
+        </div>
+      </div>
+      <div class="innnerAll">
+        <div class="innnerLeft">
+
+        </div>
+        <div class="innnerRight">
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="slider">
+          <a>智慧社区机顶盒上线啦！</a>
+          <a>智慧社区机顶盒上线啦</a>
+          <a>智慧社区机顶盒上线！</a>
+          <a>智慧社区机顶盒上线</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
+<script src="js/jquery.js"></script>
+<script src="js/public/common.js"></script>
+<script>
+  time({
+    time:document.querySelector('#time'),
+    data:document.querySelector('#data'),
+    year:document.querySelector('#y-m-d')
+  });
+</script>

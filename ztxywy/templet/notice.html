@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/public/common.css"/>
+  <link rel="stylesheet" href="css/public/article.css"/>
+</head>
+<body>
+<div class="box">
+  <!--测试组件-->
+  <div class="console" id="console">
+    <div class="test">测试</div>
+    <div class="content">
+    </div>
+  </div>
+  <div class="alert-box">
+    <div class="alert-box-inlinebox">暂无数据</div>
+  </div>
+  <!-- home-box组件 限定可显示大小，防止边缘阻挡 -->
+    <div class="box-home">
+    <div class="head">
+      <div class="logo">智慧社区</div>
+      <div class="head_title">小区公告</div>
+      <div class="y-m-d" id="y-m-d"></div>
+      <div class="slash">/</div>
+      <div class="date" id="data"></div>
+      <div class="time" id="time"></div>
+    </div>
+    <div class="main">
+      <!--小区公告模块-->
+      <div class="notice_box">
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title">"无锡市万名代表小康型"研讨会通知</p>
+          <p class="notice_timeDate">10-07  10:46:50</p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        <!--page页-->
+        <div class="click_wrap">
+          <a class="left-click before" href="javascript:;">上一页</a>
+          <div class="page"><p class="currentNum">1</p>/<p class="total">1</p></div>
+          <a class="right-click next" href="javascript:;">下一页</a>
+        </div>
+      </div>
+      <div class="article_footer">
+        <div class="article_slider">
+          <a>智慧社区机顶盒上线啦！</a>
+          <a>智慧社区机顶盒上线啦</a>
+          <a>智慧社区机顶盒上线！</a>
+          <a>智慧社区机顶盒上线</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
+<script src="js/jquery.js"></script>
+<script>
+  var noticeLists=document.getElementsByClassName("notice_list");
+  for(var i=0;i<6;i++){
+    noticeLists[i].href="./notice-line.html?id="+ 1;
+  }
+</script>

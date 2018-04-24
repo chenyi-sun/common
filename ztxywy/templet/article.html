@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/public/common.css"/>
+  <link rel="stylesheet" href="css/public/article.css"/>
+</head>
+<body>
+<div class="box">
+  <!--测试组件-->
+  <div class="console" id="console">
+    <div class="test">测试</div>
+    <div class="content">
+    </div>
+  </div>
+  <div class="alert-box">
+    <div class="alert-box-inlinebox">暂无数据</div>
+  </div>
+  <!-- home-box组件 限定可显示大小，防止边缘阻挡 -->
+    <div class="box-home">
+    <div class="head">
+      <div class="logo">智慧社区</div>
+      <div class="head_title">二手物品</div>
+      <div class="y-m-d" id="y-m-d"></div>
+      <div class="slash">/</div>
+      <div class="date" id="data"></div>
+      <div class="time" id="time"></div>
+    </div>
+    <div class="main">
+      <!--二手物品模块-->
+      <div class="content_box">
+        <div class="left">
+          <div class="innerBox">
+            <a class="menu menu_active" href="javascript:;">物品出售</a>
+            <a class="menu" href="javascript:;">物品求购</a>
+          </div>
+        </div>
+        <div class="right">
+          <div class="right-inner-1 right-inner show">
+            <a href="javascript:;" class="pic-box">
+              <img src="./imgs/banner.png" alt="" class="img" />
+              <p class="title">闪客正品苹果u盘32g 手机电脑双插头</p>
+              <p class="money">2000元</p>
+              <p class="contact"><span class="name">王先生</span><span class="tellNumber">18734595278</span></p>
+            </a>
+            <a href="javascript:;" class="pic-box middle_seat">
+              <img src="./imgs/banner.png" alt="" class="img" />
+              <p class="title">全新未拆,电视机盖,电视盒子</p>
+              <p class="money">2000元</p>
+              <p class="contact"><span class="name">王先生</span><span class="tellNumber">18734595278</span></p>
+            </a>
+            <a href="javascript:;" class="pic-box right_seat">
+              <img src="./imgs/banner.png" alt="" class="img" />
+              <p class="title">雅马哈电子琴电钢琴,新手初学必备</p>
+              <p class="money">2000元</p>
+              <p class="contact"><span class="name">王先生</span><span class="tellNumber">18734595278</span></p>
+            </a>
+          </div>
+          <div class="right-inner-2 right-inner">
+            <a href="javascript:;" class="list">
+              <p class="text">求购雅马哈电子琴一台</p>
+              <p class="timeDate">10-07</p>
+              <p class="price">价格区间：<span class="range">1000~1500</span></p>
+              <p class="contacts">联系人：<span class="contactsTitle">王先生</span><span class="contactsTellNumber">18734595278</span></p>
+            </a>
+            <a href="javascript:;" class="list">
+              <p class="text">求购雅马哈电子琴一台</p>
+              <p class="timeDate">10-07</p>
+              <p class="price">价格区间：<span class="range">1000~1500</span></p>
+              <p class="contacts">联系人：<span class="contactsTitle">王先生</span><span class="contactsTellNumber">18734595278</span></p>
+            </a>
+            <a href="javascript:;" class="list">
+              <p class="text">求购雅马哈电子琴一台</p>
+              <p class="timeDate">10-07</p>
+              <p class="price">价格区间：<span class="range">1000~1500</span></p>
+              <p class="contacts">联系人：<span class="contactsTitle">王先生</span><span class="contactsTellNumber">18734595278</span></p>
+            </a>
+            <a href="javascript:;" class="list">
+              <p class="text">求购雅马哈电子琴一台</p>
+              <p class="timeDate">10-07</p>
+              <p class="price">价格区间：<span class="range">1000~1500</span></p>
+              <p class="contacts">联系人：<span class="contactsTitle">王先生</span><span class="contactsTellNumber">18734595278</span></p>
+            </a>
+            <a href="javascript:;" class="list">
+              <p class="text">求购雅马哈电子琴一台</p>
+              <p class="timeDate">10-07</p>
+              <p class="price">价格区间：<span class="range">1000~1500</span></p>
+              <p class="contacts">联系人：<span class="contactsTitle">王先生</span><span class="contactsTellNumber">18734595278</span></p>
+            </a>
+          </div>
+          <!-- page页 -->
+          <div class="num-box">
+            <a href="javascript:;" class="left-click">上一页</a>
+            <div class="page"><p class="nowpage">1</p>/<p class="totalpage">1</p></div>
+            <a href="javascript:;" class="right-click">下一页</a>
+          </div>
+        </div>
+      </div>
+      <div class="article_footer">
+        <div class="article_slider">
+          <a>智慧社区机顶盒上线啦！</a>
+          <a>智慧社区机顶盒上线啦</a>
+          <a>智慧社区机顶盒上线！</a>
+          <a>智慧社区机顶盒上线</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
+<script src="js/jquery.js"></script>
+<script src="js/public/common.js"></script>
+<script>
+  $(".menu").click(function () {
+    index = $(this).index();
+    $(this).addClass("menu_active").siblings().removeClass("menu_active");
+    $(".right").children(".right-inner").removeClass("show").eq(index).addClass("show");
+  });
+</script>
+
+
+<script>
+  time({
+    time: document.querySelector('#time'),
+    data: document.querySelector('#data'),
+    year: document.querySelector('#y-m-d')
+  });
+</script>

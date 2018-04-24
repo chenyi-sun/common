@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/public/common.css"/>
+  <link rel="stylesheet" href="css/public/article.css"/>
+</head>
+<body>
+<div class="box">
+  <!--测试组件-->
+  <div class="console" id="console">
+    <div class="test">测试</div>
+    <div class="content">
+    </div>
+  </div>
+  <div class="alert-box">
+    <div class="alert-box-inlinebox">暂无数据</div>
+  </div>
+  <!-- home-box组件 限定可显示大小，防止边缘阻挡 -->
+    <div class="box-home">
+    <div class="head">
+      <div class="logo">智慧社区</div>
+      <div class="head_title">物业服务</div>
+      <div class="y-m-d" id="y-m-d"></div>
+      <div class="slash">/</div>
+      <div class="date" id="data"></div>
+      <div class="time" id="time"></div>
+    </div>
+    <div class="main">
+
+      <!--物业服务模块-->
+      <div class="property_box">
+        <img src="./imgs/property_icon.png" alt="" class="property_icon">
+        <div class="property_explain">
+          物业服务包括<ins>设施报修</ins>、<ins>房屋报修</ins>、<ins>管网报修</ins>、<ins>投诉建议</ins>、<ins>物业拜访</ins>等。
+        </div>
+        <!--<a href="javascript:;"  class="phone_box">
+          <input type="text" class="number" placeholder="手机号">
+        </a>-->
+        <input type="text" class="phone_box"  placeholder="手机号">
+        <p class="property_explain" style="top:320px;letter-spacing: 0">请填写您的手机号，我们将尽快与您取得联系。</p>
+        <input type="submit" class="submit" value="确认提交">
+      </div>
+      <!--小区公告模块-->
+      <!--<div class="notice_box">
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title">"无锡市万名代表小康型"研讨会通知</p>
+          <p class="notice_timeDate">10-07  10:46:50</p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        <a href="javascript:;" class="notice_list">
+          <p class="notice_title"></p>
+          <p class="notice_timeDate"></p>
+        </a>
+        &lt;!&ndash;page页&ndash;&gt;
+        <div class="click_wrap">
+          <a class="left-click before" href="javascript:;">上一页</a>
+          <div class="page"><p class="currentNum">1</p>/<p class="total">1</p></div>
+          <a class="right-click next" href="javascript:;">下一页</a>
+        </div>
+      </div>
+      &lt;!&ndash;房屋出租模块&ndash;&gt;
+      <div class="buildings_box">
+        <div class="left">
+          <div class="innerBox">
+            <a class="menu buildings_menu menu_active" href="javascript:;">出租房</a>
+            <a class="menu" href="javascript:;">找室友</a>
+            <a class="menu" href="javascript:;">找房源</a>
+          </div>
+        </div>
+        <div class="right">
+          <div class="right-inner-1 right_inner show">
+            <a href="javascript:;" class="pic-box">
+              <img src="./imgs/banner.png" alt="" class="img" />
+              <div class="buildings_content">
+                <p class="title">爱家金河湾 品质小区环境好 交通好</p>
+                <p class="buildings_money"><span class="buildings">3室2厅</span><span class="money">2000元/月</span></p>
+                <p class="contact"><span class="name">王先生</span><span class="tellNumber">12345678901</span></p>
+              </div>
+            </a>
+            <a href="javascript:;" class="pic-box middle_seat">
+              <img src="" alt="" class="img" />
+              <div class="buildings_content">
+                <p class="title"></p>
+                <p class="buildings_money"><span class="buildings"></span><span class="money"></span></p>
+                <p class="contact"><span class="name"></span><span class="tellNumber"></span></p>
+              </div>
+            </a>
+            <a href="javascript:;" class="pic-box right_seat">
+              <img src="" alt="" class="img" />
+              <div class="buildings_content">
+                <p class="title"></p>
+                <p class="buildings_money"><span class="buildings"></span><span class="money"></span></p>
+                <p class="contact"><span class="name"></span><span class="tellNumber"></span></p>
+              </div>
+            </a>
+          </div>
+          <div class="right-inner-2 right_inner">
+            <a href="javascript:;" class="pic-box">
+              <img src="" alt="" class="img" />
+              <div class="buildings_content">
+                <p class="title"></p>
+                <p class="buildings_money"><span class="buildings"></span><span class="money"></span></p>
+                <p class="contact"><span class="name"></span><span class="tellNumber"></span></p>
+              </div>
+            </a>
+            <a href="javascript:;" class="pic-box middle_seat">
+              <img src="./imgs/banner.png" alt="" class="img" />
+              <div class="buildings_content">
+                <p class="title">爱家金河湾 品质小区环境好 交通好</p>
+                <p class="buildings_money"><span class="buildings">3室2厅</span><span class="money">2000元/月</span></p>
+                <p class="contact"><span class="name">王先生</span><span class="tellNumber">12345678901</span></p>
+              </div>
+            </a>
+            <a href="javascript:;" class="pic-box right_seat">
+              <img src="" alt="" class="img" />
+              <div class="buildings_content">
+                <p class="title"></p>
+                <p class="buildings_money"><span class="buildings"></span><span class="money"></span></p>
+                <p class="contact"><span class="name"></span><span class="tellNumber"></span></p>
+              </div>
+            </a>
+          </div>
+          <div class="right-inner-3 right_inner">
+            <a href="javascript:;" class="pic-box">
+              <img src="" alt="" class="img" />
+              <div class="buildings_content">
+                <p class="title"></p>
+                <p class="buildings_money"><span class="buildings"></span><span class="money"></span></p>
+                <p class="contact"><span class="name"></span><span class="tellNumber"></span></p>
+              </div>
+            </a>
+            <a href="javascript:;" class="pic-box middle_seat">
+              <img src="" alt="" class="img" />
+              <div class="buildings_content">
+                <p class="title"></p>
+                <p class="buildings_money"><span class="buildings"></span><span class="money"></span></p>
+                <p class="contact"><span class="name"></span><span class="tellNumber"></span></p>
+              </div>
+            </a>
+            <a href="javascript:;" class="pic-box right_seat">
+              <img src="./imgs/banner.png" alt="" class="img" />
+              <div class="buildings_content">
+                <p class="title">爱家金河湾 品质小区环境好 交通好</p>
+                <p class="buildings_money"><span class="buildings">3室2厅</span><span class="money">2000元/月</span></p>
+                <p class="contact"><span class="name">王先生</span><span class="tellNumber">12345678901</span></p>
+              </div>
+            </a>
+          </div>
+          &lt;!&ndash; page页 &ndash;&gt;
+          <div class="num-box">
+            <a href="javascript:;" class="left-click">上一页</a>
+            <div class="page"><p class="nowpage"></p>/<p class="totalpage"></p></div>
+            <a href="javascript:;" class="right-click">下一页</a>
+          </div>
+        </div>
+      </div>-->
+      <div class="article_footer">
+        <div class="article_slider">
+          <a>智慧社区机顶盒上线啦！</a>
+          <a>智慧社区机顶盒上线啦</a>
+          <a>智慧社区机顶盒上线！</a>
+          <a>智慧社区机顶盒上线</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
+<script src="js/jquery.js"></script>
+<script src="js/public/common.js"></script>
+<script>
+  time({
+    time: document.querySelector('#time'),
+    data: document.querySelector('#data'),
+    year: document.querySelector('#y-m-d')
+  });
+</script>
+<!--<script src="js/jquery.js"></script>
+<script>
+  $(".menu").click(function () {
+    index = $(this).index();
+    $(this).addClass("menu_active").siblings().removeClass("menu_active");
+    $(".right").children(".right-inner").removeClass("show").eq(index).addClass("show");
+  });
+</script>-->

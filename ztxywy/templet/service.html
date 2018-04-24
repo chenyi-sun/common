@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/public/common.css"/>
+  <link rel="stylesheet" href="css/public/index.css"/>
+</head>
+<body>
+<div class="box">
+  <!--测试组件-->
+  <div class="console" id="console">
+    <div class="test">测试</div>
+    <div class="content">
+    </div>
+  </div>
+  <div class="alert-box">
+    <div class="alert-box-inlinebox">暂无数据</div>
+  </div>
+  <!-- home-box组件 限定可显示大小，防止边缘阻挡 -->
+  <div class="box-home">
+    <div class="head">
+      <div class="logo">智慧社区</div>
+      <div class="head_title"></div>
+      <div class="y-m-d" id="y-m-d"></div>
+      <div class="slash">/</div>
+      <div class="date" id="data"></div>
+      <div class="time" id="time"></div>
+    </div>
+    <div class="main">
+      <div class="nav">
+        <div class="all-menus">
+          <!--<a class="menu" href="javascript:;">
+              我的首页
+          </a>-->
+        </div>
+      </div>
+      <div class="innnerAll">
+        <div class="innnerLeft">
+          <div class="innnerLeft_banner">
+            <img src="./imgs/banner.png" alt="" style="width: 100%;height: 100%">
+          </div>
+          <div class="notic">
+            <div class="notic_con">
+              <a href="javascript:;" class="tips">
+                <div class="square"></div>
+                <p>明日小区管道改造停水一天。</p>
+              </a>
+              <a href="javascript:;" class="tips line" style="top: 55px;height: 53px">
+                <div class="square" style="background: #e8355f;height: 53px"></div>
+                <p>明日小区管道改造停水一天。</p>
+              </a>
+              <a href="javascript:;" class="tips" style="top:110px">
+                <div class="square" style="background: #e49e37"></div>
+                <p>明日小区管道改造停水一天。</p>
+              </a>
+            </div>
+            <div class="notic_more">
+              <a href="JavaScript:window.open('notice.html','_self')" class="more notice">查看全部公告</a>
+            </div>
+          </div>
+        </div>
+        <div class="innnerRight">
+          <a href="javascript:;" class="home button_box button-border-2px-focus">
+            <img src="./imgs/service_icon1.png" alt="" class= button-border-1px-black-focus">
+          </a>
+          <a href="JavaScript:window.open('property.html','_self')" class="property button_box button-border-2px-focus" style="left: 224px">
+            <img src="./imgs/service_icon2.png" alt="" class="button-border-1px-black-focus">
+          </a>
+          <a href="JavaScript:window.open('buildings.html','_self')" class="buildings button_box button-border-2px-focus" style="left: 449px">
+            <img src="./imgs/service_icon3.png" alt="" class="button-border-1px-black-focus">
+          </a>
+          <a href="javascript:;" class="express button_box button-border-2px-focus" style="bottom: 0">
+            <img src="./imgs/service_icon4.png" alt="" class="button-border-1px-black-focus">
+          </a>
+          <a href="javascript:;" class="tell button_box button-border-2px-focus" style="left: 224px;bottom: 0">
+            <img src="./imgs/service_icon5.png" alt="" class="button-border-1px-black-focus">
+          </a>
+          <a href="JavaScript:window.open('article.html','_self')" class="article button_box button-border-2px-focus" style="left: 449px;bottom: 0">
+            <img src="./imgs/service_icon6.png" alt="" class="button-border-1px-black-focus">
+          </a>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="slider">
+          <a>智慧社区机顶盒上线啦！</a>
+          <a>智慧社区机顶盒已上线</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+<script src="js/jquery.js"></script>
+<script src="js/public/common.js"></script>
+<script>
+  time({
+    time: document.querySelector('#time'),
+    data: document.querySelector('#data'),
+    year: document.querySelector('#y-m-d')
+  });
+
+
+  (function(){
+    all = {
+      common:function(){
+        return function Common(){
+          this.elements = {
+            lis:{
+              name:'弹窗(暂无数据/测试)',
+              type: 'css',
+            },
+            test:{
+              name:'测试组件',
+              type: 'css',
+            }
+          };
+          this.browers ={
+            'Insper':{
+              name: 'wobox',
+              nameA: '浪潮isTB(山东有线)',
+            },
+            'iPanel':{
+              name: 'iPanel',
+              nameA: '茁壮网络'
+            },
+            'firefox':{
+              name: 'firefox',
+              nameA: '火狐'
+            },
+            'chrome':{
+              name: 'chrome',
+              nameA: 'chrome浏览器'
+            }
+          };
+          this.tv = ['Insper','iPanel'];
+          this.istest = false;
+          this.windowVersion = {
+            ss: 'ddd'
+          };
+          this.init = function(){
+
+          }
+        }
+      },
+    }
+    var common = new all.common();
+    var init = {
+      setnoMessage: function Nomessage(message){
+        var common = all.common();
+        common.call(this);
+        var self = this;
+        var alert_box = document.getElementsByClassName('alert-box')[0];
+        var alertInlinebox = document.getElementsByClassName('alert-box-inlinebox')[0];
+        var body = document.getElementsByTagName('body')[0];
+        var click_items = document.getElementsByClassName('lis');
+        this.init = function(info){
+          if(info){
+            this.infomessage(info);
+            return false;
+          }
+          for(item in click_items){
+            var click_item = click_items[item];
+            click_item.onclick = function(){
+              click_action(this);
+            };
+          }
+        }
+        function click_action (click_item){
+          alert_box.setAttribute('class', 'alert-box display-block');
+          var atrs = click_item.getAttribute('atr')||null;
+          if(atrs){
+            alertInlinebox.setAttribute('class', 'alert-box-inlinebox alert-box-opacity alert-box-inlinebox-change');
+          }
+          else{
+            alertInlinebox.setAttribute('class', 'alert-box-inlinebox alert-box-opacity');
+          }
+          var message = click_item.getAttribute('atr')||'暂无数据';
+          alertInlinebox.innerHTML= message;
+          setTimeout(set,1000);
+        }
+        this.infomessage = function(info){
+          alert_box.setAttribute('class', 'alert-box display-block');
+          alertInlinebox.setAttribute('class', 'alert-box-inlinebox alert-box-opacity alert-box-inlinebox-change');
+          var message = info;
+          alertInlinebox.innerHTML = message;
+          setTimeout(set,1000);
+        }
+        function set(){
+          alert_box.setAttribute('class', 'alert-box');
+          alertInlinebox.setAttribute('class', 'alert-box-inlinebox');
+        }
+
+      },
+    }
+    var initsetMessage = new init.setnoMessage();
+
+    window.common={
+      initsetMessage: initsetMessage,
+    }
+  }())
+
+
+  /*（暂未开放）*/
+  var home = document.getElementsByClassName('home')[0];
+  var express = document.getElementsByClassName('express')[0];
+  var tell = document.getElementsByClassName('tell')[0];
+  var partyActivity = document.getElementsByClassName('partyactivity')[0];
+  var undo = [home,express,tell,partyActivity];
+  setUnpublic(undo);
+
+  /**设置暂未开放 */
+  function setUnpublic(undo){
+    for(var i = 0;i<undo.length;i++){
+      if(undo[i]){
+        undo[i].onkeydown = function(evt){
+          if(evt.keyCode == 13){
+            common.initsetMessage.init('暂未开放');
+          }
+        }
+      }
+    }
+  }
+</script>
