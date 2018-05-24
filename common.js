@@ -78,7 +78,15 @@ var init = function(){
             }
         }
         
-    }
+    },
+    function regPic(){ //正则匹配所有的图片
+        var str = res;
+        var par = /(<img.*?\/>)/ig;
+        var arrs = str.match(par);
+        for(var i in arrs){
+            console.log(arrs[i]);
+        }
+    },
     return chenyi;
 }
 
