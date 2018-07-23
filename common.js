@@ -78,7 +78,7 @@ var init = function(){
             }
         }
         
-    },
+    }
     function regPic(){ //正则匹配所有的图片
         var str = res;
         var par = /(<img.*?\/>)/ig;
@@ -86,7 +86,7 @@ var init = function(){
         for(var i in arrs){
             console.log(arrs[i]);
         }
-    },
+    }
     return chenyi;
 }
 
@@ -96,3 +96,12 @@ console.log(chenyi('.sss'));
 chenyi('#sss').removeClass('ee');
 chenyi('.sss')[0].removeClass('ddd');
 console.log(chenyi('.sss')[0]);
+
+var common = {
+    dom: (this==window?document:this).querySelectorAll(selector),
+    selectDom: function(){
+       window.$=HTMLElement.prototype.$=function(selector){
+            return (this==window?document:this).querySelectorAll(selector);
+        }//1window$的结束
+    }
+};
