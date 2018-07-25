@@ -100,55 +100,56 @@
  */
     function GetDom(value){ 
         let values = getDom(value);
-
-        if(!values[0].__proto__.addClass){
-            values[0].__proto__.addClass = function (values){
-                const classNames = this.className;
-                const classArr = classNames.split(" ");
-                const value = values.trim();
-                for(let item in classArr){
-                    if(classArr[item] == value){
-                        return false;
-                    };
+        if(values.length > 0){
+            if(!values[0].__proto__.addClass){
+                values[0].__proto__.addClass = function (values){
+                    const classNames = this.className;
+                    const classArr = classNames.split(" ");
+                    const value = values.trim();
+                    for(let item in classArr){
+                        if(classArr[item] == value){
+                            return false;
+                        };
+                    }
+                    this.className = this.className.trim() + ' ' + value.trim();
                 }
-                this.className = this.className.trim() + ' ' + value.trim();
             }
-        }
 
-        if(!values[0].__proto__.hasClass){
-            values[0].__proto__.hasClass = function (values){
-                const classNames = this.className.trim().split(" ");
-                for(let item in classNames){
-                    if(classNames[item] == values.trim()){
-                        return true;
-                    };
+            if(!values[0].__proto__.hasClass){
+                values[0].__proto__.hasClass = function (values){
+                    const classNames = this.className.trim().split(" ");
+                    for(let item in classNames){
+                        if(classNames[item] == values.trim()){
+                            return true;
+                        };
+                    }
+                    return false;
                 }
-                return false;
             }
-        }
 
-        if(!values[0].__proto__.removeClass){
-            values[0].__proto__.removeClass = function (value){
-                const classNames = this.className.trim().split(" ");
-                let bool = false;
-                const valueInt = value.trim();
-                const setClassName = (valueInt) => {
-                    let ClassName = classNames;
-                    for(let item in ClassName){
+            if(!values[0].__proto__.removeClass){
+                values[0].__proto__.removeClass = function (value){
+                    const classNames = this.className.trim().split(" ");
+                    let bool = false;
+                    const valueInt = value.trim();
+                    const setClassName = (valueInt) => {
+                        let ClassName = classNames;
+                        for(let item in ClassName){
+                            if(classNames[item] == valueInt){
+                                ClassName.splice(item,1);
+                            }
+                        }
+                        ClassName = ClassName.join(" ");
+                        return ClassName;
+                    };
+                    for(let item in classNames){
                         if(classNames[item] == valueInt){
-                              ClassName.splice(item,1);
+                            bool = true;
+                            this.className = setClassName(valueInt)
                         }
                     }
-                    ClassName = ClassName.join(" ");
-                    return ClassName;
-                };
-                for(let item in classNames){
-                    if(classNames[item] == valueInt){
-                        bool = true;
-                        this.className = setClassName(valueInt)
-                    }
+                    return bool;
                 }
-                return bool;
             }
         }
         return values;
@@ -157,3 +158,5 @@
 
 let dom = GetDom(".a")[1];
 let bool = dom.hasClass('test');
+
+console.log(bool);
