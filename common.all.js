@@ -1,4 +1,7 @@
-/** set cookie */
+ /**
+ * 通用函数封装
+ * by chenyi
+ */
 
 {
     function setCookie(name,value){
@@ -53,7 +56,7 @@
         return arr;
     }
 
-    function getDom(value, dom){
+    function getDom(value, dom){ 
         let valueInt = value.trim();
         let intArrs = valueInt.split(' ');
         let init = {
@@ -88,16 +91,64 @@
             return dom;
         }
     }
-
-    function GetDom(value){
+ /**
+ * GetDom 让返回的DOM数组的每个dom都拥有方法
+ * @param {string} value 类名("#a .ass .ds")
+ * addClass
+ * hasClass
+ * removeClass
+ */
+    function GetDom(value){ 
         let values = getDom(value);
-        const init = {
-            
-        };
 
         if(!values[0].__proto__.addClass){
             values[0].__proto__.addClass = function (values){
-                this.className = this.className.trim() + ' '+values.trim();
+                const classNames = this.className;
+                const classArr = classNames.split(" ");
+                const value = values.trim();
+                for(let item in classArr){
+                    if(classArr[item] == value){
+                        return false;
+                    };
+                }
+                this.className = this.className.trim() + ' ' + value.trim();
+            }
+        }
+
+        if(!values[0].__proto__.hasClass){
+            values[0].__proto__.hasClass = function (values){
+                const classNames = this.className.trim().split(" ");
+                for(let item in classNames){
+                    if(classNames[item] == values.trim()){
+                        return true;
+                    };
+                }
+                return false;
+            }
+        }
+
+        if(!values[0].__proto__.removeClass){
+            values[0].__proto__.removeClass = function (value){
+                const classNames = this.className.trim().split(" ");
+                let bool = false;
+                const valueInt = value.trim();
+                const setClassName = (valueInt) => {
+                    let ClassName = classNames;
+                    for(let item in ClassName){
+                        if(classNames[item] == valueInt){
+                              ClassName.splice(item,1);
+                        }
+                    }
+                    ClassName = ClassName.join(" ");
+                    return ClassName;
+                };
+                for(let item in classNames){
+                    if(classNames[item] == valueInt){
+                        bool = true;
+                        this.className = setClassName(valueInt)
+                    }
+                }
+                return bool;
             }
         }
         return values;
@@ -105,4 +156,4 @@
 }
 
 let dom = GetDom(".a")[1];
-dom.addClass('name');
+let bool = dom.hasClass('test');
