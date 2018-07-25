@@ -88,9 +88,13 @@
             return dom;
         }
     }
-    
+
     function GetDom(value){
         let values = getDom(value);
+        const init = {
+            
+        };
+
         if(!values[0].__proto__.addClass){
             values[0].__proto__.addClass = function (values){
                 this.className = this.className.trim() + ' '+values.trim();
